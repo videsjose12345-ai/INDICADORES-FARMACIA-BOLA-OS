@@ -1,13 +1,13 @@
 # Dashboard de indicadores — Farmacia Bolaños
 
-Sitio estático listo para GitHub y Vercel. No requiere framework, dependencias ni comando de compilación: Vercel puede servir `index.html` directamente.
+Sitio estático publicado en Vercel y conectado al proyecto privado `farmacia-bolanos-dashboard` de Supabase.
 
-## Publicar con GitHub y Vercel
+## Sincronización entre dispositivos
 
-1. Crea un repositorio en GitHub y sube el contenido de esta carpeta (`index.html` y `vercel.json`).
-2. En Vercel, importa ese repositorio. Deja el framework como **Other** y los campos **Build Command** y **Output Directory** vacíos. No hay paso de compilación.
-3. Pulsa **Deploy**. Vercel servirá el dashboard desde la raíz del sitio.
+1. Abre el dashboard en tu computadora y crea una cuenta con tu correo y contraseña. Confirma el correo si Supabase lo solicita.
+2. Inicia sesión en el dashboard desde la computadora para importar los registros que ya estuvieran guardados allí.
+3. Abre el mismo enlace en tu teléfono e inicia sesión con la misma cuenta.
 
-## Datos
+Cada cuenta solo puede leer y editar sus propios datos mediante Row Level Security. La aplicación usa una clave publicable del navegador; nunca uses una clave `secret` o `service_role` en el HTML.
 
-Los registros se guardan en el almacenamiento local del navegador del dispositivo donde se ingresan. Los despliegues y cambios del código no borran ese almacenamiento del navegador; los datos no se sincronizan automáticamente con otros dispositivos o navegadores. No borres los datos del sitio en el navegador si necesitas conservarlos.
+Los datos existentes se importan del almacenamiento local al iniciar sesión si no existen aún en la nube. Cuando hay un registro de mismo mes o semana en Supabase, prevalece el de la nube.
