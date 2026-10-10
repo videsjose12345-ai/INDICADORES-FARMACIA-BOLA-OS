@@ -22,3 +22,18 @@ grant select, insert, update, delete on public.monthly_indicators to authenticat
 grant select, insert, update, delete on public.weekly_debts to authenticated;
 create policy "Users manage their own monthly indicators" on public.monthly_indicators for all to authenticated using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 create policy "Users manage their own weekly debts" on public.weekly_debts for all to authenticated using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
+
+-- Totales diarios (ventas, compras, pagos) para la vista por rango de fechas
+create table if not exists public.daily_indicators (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  day date not null,
+  sales numeric(14,2),
+  purchases numeric(14,2),
+  payments numeric(14,2),
+  updated_at timestamptz not null default now(),
+  primary key (user_id, day)
+);
+alter table public.daily_indicators enable row level security;
+revoke all on public.daily_indicators from anon;
+grant select, insert, update, delete on public.daily_indicators to authenticated;
+create policy "Users manage their own daily indicators" on public.daily_indicators for all to authenticated using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
